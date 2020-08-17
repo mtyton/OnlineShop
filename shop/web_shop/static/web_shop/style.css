@@ -1,0 +1,83 @@
+html
+{
+    margin: 0  auto;
+    height: auto;
+}
+body
+{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.navbar
+{
+    text-align: center;
+    background-color: #EBD1CB;
+    font-size: 30px;
+}
+
+@media screen and (max-height: 1080px;){
+    .navbar
+    {
+        height: 10%;
+        width: 100%;
+        background-color: yellow;
+    }
+}
+
+.nav-items
+{
+    list-style-type: None;
+    text-align: left;
+    margin-left: 10%;
+
+}
+.nav-items li
+{
+    margin: auto;
+    display: inline-block;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+a
+{
+    color:black;
+    text-decoration: None;
+}
+footer
+{
+    clear: both;
+}
+.filters
+{
+    width: 15%;
+    float: left;
+    text-align: left;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+}
+.filters ul
+{
+    list-style-type: None;
+    text-align: left;
+}
+.filter-button
+{
+    text-align: left;
+}
+.product-list
+{
+    width:85%;
+    float: right
+}
+
+.product-list-item
+{
+    float: left;
+}
+
+.product-image
+{
+    width:25%;
+    height:50%;
+}
+

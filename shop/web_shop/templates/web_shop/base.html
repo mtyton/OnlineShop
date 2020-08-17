@@ -1,0 +1,29 @@
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'web_shop/style.css' %}">
+    </head>
+    <body>
+        <nav class="navbar">
+            <ul class="nav-items">
+                <li><a href="{% url 'home' %}">Nowości</a></li>
+                <li><a href="{% url 'product' 'cloth' %}">Odzież</a></li>
+                <li><a href="{% url 'product' 'other' %}">Akcesoria i Dodatki</a></li>
+                <li><a href="{% url 'contact' %}">Kontakt</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% block content %}
+
+    {% endblock %}
+
+        <footer>
+            <hr>
+        </footer>
+    </body>
+</html>

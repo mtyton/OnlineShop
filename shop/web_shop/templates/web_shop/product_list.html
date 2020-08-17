@@ -1,0 +1,26 @@
+{% extends 'web_shop/base.html' %}
+{% block content %}
+    <div class="filters">
+        <form method="get" action="">
+          <ul>
+            {% for category in queryset.categories %}
+                <li><input type="checkbox" value={{category.category_name}} name="types">
+                    {{category.category_name}}
+                </li>
+            {% endfor %}
+          </ul>
+            <div class="filter-button">
+                <input type="submit" value="Filtruj">
+            </div>
+        </form>
+    </div>
+
+    <div class="product-list">
+        {% for product in queryset.products%}
+        <a href="{% url 'product-detail' product.product.id %}">
+            {% include 'web_shop/includes/product_box.html' %}
+        </a>
+
+        {% endfor %}
+    </div>
+{% endblock %}
