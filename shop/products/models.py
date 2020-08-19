@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -17,10 +16,6 @@ class Category(models.Model):
         return self.category_name
 
 
-class ProductManager(models.Manager):
-    pass
-
-
 class Product(models.Model):
     """
         Simply products available on store
@@ -30,27 +25,30 @@ class Product(models.Model):
     description = models.TextField(max_length=2500)
     added_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-
-    objects = ProductManager
+    price = models.DecimalField(max_digits=30, decimal_places=2)
 
     @property
     def rate(self):
         rating = ProductRating.objects.get(product=self).rating
         return rating
 
-    @staticmethod
-    def is_available():
+
+    def is_available(self):
         return True
 
     def __str__(self):
         return self.product_name
 
 
+class Size(models.Model):
+    code = models.CharField(max_length=100)
+
+
 class ProductAvalability(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
                                 verbose_name="number_per_size")
-    size = models.CharField(max_length=250)
-    number = models.IntegerField(default=0)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
 
 
 class ProductImage(models.Model):
@@ -74,48 +72,3 @@ class ProductRating(models.Model):
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)],
         default=0.0
     )
-
-
-class ContactData(models.Model):
-    """
-        Contact data for user/order.
-        Contact data is used to send messages/deliver
-    """
-    first_name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    zip_code = models.CharField(max_length=12)
-    building_number = models.CharField(max_length=10)
-    flat_number = models.CharField(max_length=10, null=True)
-    email = models.EmailField()
-    phone = models.CharField(max_length=9)
-
-
-class Customer(models.Model):
-    """
-        Customer's profile model.
-    """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    contact_data = models.ForeignKey('ContactData', on_delete=models.CASCADE)
-
-
-class Order(models.Model):
-    """
-        If there is an existing customer in database(customer has an account),
-        than contact_data is set to customer contact_data.
-
-    """
-    customer = models.ForeignKey('Customer', on_delete=models.CASCADE,
-                                 null=True)
-    contact_data = models.ForeignKey('ContactData', on_delete=models.CASCADE)
-
-
-class ProductOrder(models.Model):
-    product = models.ForeignKey('Product', on_delete=models.PROTECT)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
-
-
-class SellStats(models.Model):
-    pass

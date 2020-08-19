@@ -1,4 +1,4 @@
-from web_shop.models import Customer
+from customer_profile.models import Customer
 from django import forms
 
 
@@ -27,7 +27,3 @@ class RegisterForm(ContactForm):
     repeat_password = forms.CharField(label="Repeat Password: ", max_length=255,
                                       widget=forms.PasswordInput)
     email = forms.EmailField(label="E-mail")
-
-
-class ProfileEdit(forms.Form):
-    pass

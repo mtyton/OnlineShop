@@ -7,15 +7,16 @@
         <nav class="navbar">
             <ul class="nav-items">
                 <li><a href="{% url 'home' %}">Nowości</a></li>
-                <li><a href="{% url 'product' 'cloth' %}">Odzież</a></li>
-                <li><a href="{% url 'product' 'other' %}">Akcesoria i Dodatki</a></li>
-                <li><a href="{% url 'contact' %}">Kontakt</a></li>
+                <li><a href="{% url 'products:product' 'cloth' %}">Odzież</a></li>
+                <li><a href="{% url 'products:product' 'other' %}">Akcesoria i Dodatki</a></li>
+                <li><a href="{% url 'customer_profile:contact' %}">Kontakt</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'customer_profile:profile' %}">Profile</a></li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'customer_profile:login' %}">Login</a></li>
+                    <li><a href="{% url 'customer_profile:register' %}">Register</a></li>
                 {% endif %}
+                <li><a href="{% url 'shopping_cart:shopping-cart' %}">Cart</a></li>
             </ul>
         </nav>
     {% block content %}
