@@ -2,6 +2,11 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
+SIZE_TYPES = [
+    ('standard', 'standard')
+]
+
+
 class Category(models.Model):
     """
         This model suppose to store all available product categories.
@@ -23,8 +28,6 @@ class Product(models.Model):
     product_category = models.ForeignKey('Category', on_delete=models.CASCADE)
     product_name = models.CharField(max_length=255)
     description = models.TextField(max_length=2500)
-    added_at = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
     price = models.DecimalField(max_digits=30, decimal_places=2)
 
     @property
@@ -32,9 +35,11 @@ class Product(models.Model):
         rating = ProductRating.objects.get(product=self).rating
         return rating
 
+    def get_available(self):
+        return ProductAvailability.objects.filter(product=self)
 
-    def is_available(self):
-        return True
+    def get_all_available_sizes(self):
+        return Size.objects.filter(category=self.product_category)
 
     def __str__(self):
         return self.product_name
@@ -42,11 +47,15 @@ class Product(models.Model):
 
 class Size(models.Model):
     code = models.CharField(max_length=100)
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.code
 
 
-class ProductAvalability(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE,
-                                verbose_name="number_per_size")
+class ProductAvailability(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE,
+                                verbose_name="Product")
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
 

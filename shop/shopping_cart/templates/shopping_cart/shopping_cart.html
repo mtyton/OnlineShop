@@ -1,1 +1,28 @@
 {% extends 'web_shop/base.html' %}
+{% block content %}
+{{order_products}}
+<h1 class=""></h1>
+<div class="card mt-5">
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table table-active text-center">
+            <tr>
+                <th>Nazwa Produktu</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+            </tr>
+            {% for product in ordered_products %}
+                <tr>
+                    <td>{{product.product}}</td>
+                    <td>{{product.product.price}}</td>
+                    <td>{{product.quantity}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" class="btn btn-success float-right mr-5" value="Zamów">
+    </form>
+
+</div>
+
+
+{% endblock %}

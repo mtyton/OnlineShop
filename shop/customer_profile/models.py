@@ -19,6 +19,9 @@ class ContactData(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=9)
 
+    def __str__(self):
+        return self.first_name + " " + self.surname
+
 
 class Customer(models.Model):
     """
@@ -26,3 +29,6 @@ class Customer(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     contact_data = models.ForeignKey('ContactData', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username

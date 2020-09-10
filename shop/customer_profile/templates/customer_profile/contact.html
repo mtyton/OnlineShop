@@ -1,1 +1,9 @@
 {% extends 'web_shop/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+    <form method="POST">
+        {{form|crispy}}
+        <input type="submit" class="btn btn-success float-right" value="send">
+    </form>
+{% endblock %}

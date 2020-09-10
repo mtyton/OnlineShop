@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
+    'crispy_forms',
     'web_shop',
     'products',
     'customer_profile',
-    'shopping_cart'
+    'shopping_cart',
+    'crm',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +133,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+LOGOUT_REDIRECT_URL = '/home/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

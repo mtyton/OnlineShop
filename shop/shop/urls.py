@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include("products.urls"), name="products"),
     path('', include("customer_profile.urls"), name="customer_profile"),
     path('', include("shopping_cart.urls"), name="shopping_cart"),
+    path('crm/', include("crm.urls"), name="crm"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

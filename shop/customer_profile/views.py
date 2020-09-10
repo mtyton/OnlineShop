@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from customer_profile.forms import RegisterForm
+from django.contrib.auth.decorators import login_required
+from django.db.models import ObjectDoesNotExist
+from customer_profile.forms import (RegisterForm, QuickMessageForm,
+                                    ProfileEditForm)
 from customer_profile.models import Customer, ContactData
 
 
@@ -52,15 +55,29 @@ class ContactView(View):
             'email': "",
             'bank_account': ""
         }
-        return render(request, self.template_name, context=contact_data)
+        form = QuickMessageForm()
+        context = {
+            'contact_data': contact_data,
+            'form': form
+        }
+        return render(request, self.template_name, context=context)
 
 
 class ProfileView(View):
     template_name = 'customer_profile/profile.html'
 
     def get(self, request):
-        context = {'form': ""}
-        return render(request, self.template_name)
+        try:
+            contact_data = Customer.objects.get(user=request.user)
+        except ObjectDoesNotExist:
+            contact_data = ContactData.objects.create()
+            Customer.objects.create(user=request.user,
+                                    contact_data=contact_data)
+        context = {'form': ProfileEditForm(instance=contact_data)}
+        return render(request, self.template_name, context=context)
 
     def post(self, request):
         pass
+
+
+profile_view = login_required(ProfileView.as_view())

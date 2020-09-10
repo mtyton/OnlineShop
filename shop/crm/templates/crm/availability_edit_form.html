@@ -1,0 +1,29 @@
+{% extends 'crm/base_crm_template.html'  %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+    <form enctype="multipart/form-data" action="" method="POST">
+        {% csrf_token %}
+        {%for form in forms%}
+        <div class="row">
+            <div class="col-6">
+                {{form.size|as_crispy_field}}
+            </div>
+            <div class="col-6">
+                {{form.quantity|as_crispy_field}}
+            </div>
+        </div>
+
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-6">
+            </div>
+            <div class="col-6">
+                <input type="submit" value="UPDATE" class="btn-lg btn-success float-right">
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}
