@@ -14,7 +14,7 @@ class BaseSupervisorControlledView(object):
         Supervisor - user who can perform some super actions (for more info see the docs)
         """
         if user.is_authenticated:
-            return user.is_staff or user.group.name=="salesman"
+            return user.is_staff or user.group.name == "salesman"
         else:
             return False
 
