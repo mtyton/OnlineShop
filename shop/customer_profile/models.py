@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-class ContactData(models.Model):
+class BaseContactModel(models.Model):
     """
         Contact data for user/order.
         Contact data is used to send messages/deliver
     """
-    first_name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
+    class Meta:
+        abstract = True
+
     country = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     street = models.CharField(max_length=255)
@@ -23,12 +24,11 @@ class ContactData(models.Model):
         return self.first_name + " " + self.surname
 
 
-class Customer(models.Model):
+class PersonCustomer(BaseContactModel):
     """
         Customer's profile model.
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    contact_data = models.ForeignKey('ContactData', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username

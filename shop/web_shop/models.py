@@ -11,6 +11,6 @@ class Promotions(models.Model):
     @classmethod
     def get_latest(cls) -> models.QuerySet:
         """
-        Returns 3 latests promotions
+        Returns 3 latest promotions
         """
         return cls.objects.order_by('-upload_date')[:3]

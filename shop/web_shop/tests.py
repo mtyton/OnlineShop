@@ -28,4 +28,5 @@ from web_shop.models import (Product, ProductImage, Category,
 #         images = self.prod.image_set
 #         self.assertEqual(len(images), 1)
 
-class HomeViewTestCase()
+class HomeViewTestCase():
+    pass

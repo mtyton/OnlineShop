@@ -9,13 +9,18 @@ SIZE_TYPES = [
 
 class Category(models.Model):
     """
-        This model suppose to store all available product categories.
+        This model keeps information about available product categories
     """
-    AVAILABLE_CATEGORY_TYPES = [('cloth', 'cloth'), ('other', 'other')]
 
-    category_type = models.CharField(
-        choices=AVAILABLE_CATEGORY_TYPES, max_length=50)
     category_name = models.CharField(max_length=255)
+
+    parent_category = models.ForeignKey(
+        "Category", on_delete=models.CASCADE, null=True
+    )
+
+    @property
+    def sub_categories(self) -> models.QuerySet:
+        return Category.objects.get(parent_category=self)
 
     def __str__(self):
         return self.category_name
@@ -23,19 +28,20 @@ class Category(models.Model):
 
 class Product(models.Model):
     """
-        Simply products available on store
+        This models keeps data about particular product
     """
     product_category = models.ForeignKey('Category', on_delete=models.CASCADE)
     product_name = models.CharField(max_length=255)
     description = models.TextField(max_length=2500)
     price = models.DecimalField(max_digits=30, decimal_places=2)
 
-    @property
-    def rate(self):
-        rating = ProductRating.objects.get(product=self).rating
-        return rating
+    rating = models.FloatField(
+        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)],
+        default=0.0
+    )
 
-    def get_available(self):
+    @property
+    def available_products(self):
         return ProductAvailability.objects.filter(product=self)
 
     def get_all_available_sizes(self):
@@ -43,21 +49,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
-
-
-class Size(models.Model):
-    code = models.CharField(max_length=100)
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.code
-
-
-class ProductAvailability(models.Model):
-    product = models.ForeignKey("Product", on_delete=models.CASCADE,
-                                verbose_name="Product")
-    size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=0)
 
 
 class ProductImage(models.Model):
@@ -72,12 +63,17 @@ class ProductImage(models.Model):
         return self.image.url
 
 
-class ProductRating(models.Model):
-    """
-        Every product should have it's own rate.
-    """
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    rating = models.FloatField(
-        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)],
-        default=0.0
+class Size(models.Model):
+    code = models.CharField(max_length=100)
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.code
+
+
+class ProductAvailability(models.Model):
+    product = models.ForeignKey(
+        "Product", on_delete=models.CASCADE, verbose_name="Product"
     )
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
