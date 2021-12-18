@@ -1,32 +1,51 @@
-from django.test import TestCase
-from django.core.files import File
-import mock
-from web_shop.models import (Product, ProductImage, Category,
-                             ProductRating, ContactData, Customer,
-                             Order, ProductOrder)
+from django.shortcuts import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 
-# TODO - this test case should be moved elsewhere
-# class TestProductModel(TestCase):
-#     def setUp(self):
-#         self.test_category = Category.objects.create(category_name="test_cat")
-#         self.prod = Product.objects.create(
-#             product_name="testname", description="desc", price=10.0,
-#             on_stock=10, product_category=self.test_category,
-#         )
-#         self.file_mock = mock.MagicMock(spec=File)
-#
-#     def test_product_image_set_empty(self):
-#         images = self.prod.image_set
-#         self.assertEqual(len(images), 0)
-#
-#     def test_product_image_set(self):
-#         self.file_mock.name = "test.png"
-#         ProductImage.objects.create(
-#             product=self.prod,
-#             image=self.file_mock
-#         )
-#         images = self.prod.image_set
-#         self.assertEqual(len(images), 1)
+from commons.tests import ExtendedTestCase
+from web_shop.models import Promotion
 
-class HomeViewTestCase():
-    pass
+
+class HomeViewTestCase(ExtendedTestCase):
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('home')
+
+    def test_get_no_promotions(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, template_name='web_shop/index.html'
+        )
+
+    def test_get_success_no_auth(self):
+        for i in range(3):
+            Promotion.objects.create(
+                promotion_title=f"testPromotion{i}",
+                image=SimpleUploadedFile(
+                    name=f"image{i}.jpg",
+                    content="", content_type="image/jpeg"
+                )
+            )
+
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, template_name='web_shop/index.html'
+        )
+
+    def test_get_success_user_authenticated(self):
+        for i in range(3):
+            Promotion.objects.create(
+                promotion_title=f"testPromotion{i}",
+                image=SimpleUploadedFile(
+                    name=f"image{i}.jpg",
+                    content="", content_type="image/jpeg"
+                )
+            )
+
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, template_name='web_shop/index.html'
+        )

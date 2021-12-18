@@ -1,5 +1,5 @@
 from django.contrib import admin
-from web_shop.models import CarouselData
+from web_shop.models import Promotion
 
 
-admin.site.register(CarouselData)
+admin.site.register(Promotion)
