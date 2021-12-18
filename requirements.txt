@@ -1,9 +1,12 @@
 asgiref==3.4.1
 backcall==0.2.0
+beautifulsoup4==4.10.0
 bootstrap4==0.1.0
 decorator==5.1.0
 Django==4.0
+django-bootstrap4==21.1
 django-crispy-forms==1.13.0
+django-environ==0.8.1
 django-rest-framework==0.1.0
 djangorestframework==3.13.1
 ipdb==0.13.9
@@ -19,6 +22,7 @@ prompt-toolkit==3.0.24
 ptyprocess==0.7.0
 Pygments==2.10.0
 pytz==2021.3
+soupsieve==2.3.1
 sqlparse==0.4.2
 toml==0.10.2
 traitlets==5.1.1
