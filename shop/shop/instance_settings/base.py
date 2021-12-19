@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'web_shop',
     'products',
-    'customer_profile',
+    'users',
     'shopping_cart',
     'crm',
 ]
@@ -45,6 +45,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# global auto field
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ROOT_URLCONF = 'shop.urls'
 

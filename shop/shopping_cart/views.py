@@ -3,7 +3,7 @@
 # from django.contrib.auth.decorators import login_required
 # from django.db.models import ObjectDoesNotExist
 # from shopping_cart.models import Order, ProductOrder
-# from customer_profile.models import Customer
+# from users.models import Customer
 # from products.models import Product
 #
 #
@@ -12,7 +12,7 @@
 #
 #     def get(self, request):
 #         if not request.user.is_authenticated:
-#             return redirect(reverse('customer_profile:login'))
+#             return redirect(reverse('users:login'))
 #         order = Order.objects.get_current_user_order(user=request.user)
 #         context = {
 #             'order': order,

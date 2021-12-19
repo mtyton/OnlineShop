@@ -4,9 +4,9 @@
 # from django.contrib.auth import login
 # from django.contrib.auth.decorators import login_required
 # from django.db.models import ObjectDoesNotExist
-# from customer_profile.forms import (RegisterForm, QuickMessageForm,
+# from users.forms import (RegisterForm, QuickMessageForm,
 #                                     ProfileEditForm)
-# from customer_profile.models import Customer, ContactData
+# from users.models import Customer, ContactData
 #
 #
 # class RegisterView(View):
@@ -49,7 +49,7 @@
 #
 #
 # class ContactView(View):
-#     template_name = 'customer_profile/contact.html'
+#     template_name = 'users/contact.html'
 #
 #     def get(self, request):
 #         contact_data = {
@@ -66,7 +66,7 @@
 #
 #
 # class ProfileView(View):
-#     template_name = 'customer_profile/profile.html'
+#     template_name = 'users/profile.html'
 #
 #     def get(self, request):
 #         try:

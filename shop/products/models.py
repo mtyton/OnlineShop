@@ -2,21 +2,26 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
-SIZE_TYPES = [
-    ('standard', 'standard')
-]
+class Attribute(models.Model):
+    attr_name = models.CharField(max_length=255)
+    attr_description = models.TextField()
+
+
+class AttributeValue(models.Model):
+    attribute = models.ForeignKey("Attribute", on_delete=models.CASCADE)
+    # all values should be kept in CharField
+    value = models.CharField(max_length=255)
 
 
 class Category(models.Model):
     """
-        This model keeps information about available product categories
+    This model keeps information about available product categories
     """
-
-    category_name = models.CharField(max_length=255)
-
     parent_category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, null=True
     )
+    category_name = models.CharField(max_length=255)
+    attributes = models.ManyToManyField("AttributeValue")
 
     @property
     def sub_categories(self) -> models.QuerySet:
@@ -28,7 +33,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     """
-        This models keeps data about particular product
+    This models keeps data about particular product
     """
     product_category = models.ForeignKey('Category', on_delete=models.CASCADE)
     product_name = models.CharField(max_length=255)
@@ -39,13 +44,13 @@ class Product(models.Model):
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)],
         default=0.0
     )
+    attributes = models.ManyToManyField("AttributeValue")
 
-    @property
-    def available_products(self):
-        return ProductAvailability.objects.filter(product=self)
-
-    def get_all_available_sizes(self):
-        return Size.objects.filter(category=self.product_category)
+    # family hashcode gives us information to which family product belongs,
+    # for example, phone X may have few memory/color versions, but all phones X
+    # belongs to the X family
+    # family_hashcode = models.UUIDField()
+    on_stock = models.IntegerField(default=0)
 
     def __str__(self):
         return self.product_name
@@ -53,27 +58,9 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     """
-        This model stores product images, every product can have many images.
+    This models keeps images for products
     """
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     image = models.ImageField(upload_to="product_images")
+    # is main image tells if image should be the default one
     is_main_image = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.image.url
-
-
-class Size(models.Model):
-    code = models.CharField(max_length=100)
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.code
-
-
-class ProductAvailability(models.Model):
-    product = models.ForeignKey(
-        "Product", on_delete=models.CASCADE, verbose_name="Product"
-    )
-    size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=0)

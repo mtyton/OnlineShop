@@ -1,4 +1,4 @@
-# from customer_profile.models import Customer
+# from users.models import Customer
 # from django import forms
 #
 #
