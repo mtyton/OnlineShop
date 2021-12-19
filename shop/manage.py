@@ -1,11 +1,16 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
 import os
 import sys
 
+from shop.settings_loader import load_settings
+
+
+settings_name = load_settings()
+
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shop.settings')
+    """Run administrative tasks."""
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_name)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

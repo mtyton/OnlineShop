@@ -26,13 +26,13 @@
                     <a href="{% url 'home' %}" class="nav-link">Nowości</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'products:products' 'cloth' 1 %}" class="nav-link">Odzież</a>
+                    <a href="" class="nav-link">Odzież</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'products:products' 'other' 1 %}" class="nav-link">Akcesoria i Dodatki</a>
+                    <a href="" class="nav-link">Akcesoria i Dodatki</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'customer_profile:contact' %}" class="nav-link">Kontakt</a>
+                    <a href="" class="nav-link">Kontakt</a>
                 </li>
             </ul>
 
@@ -40,14 +40,14 @@
             <div div="float-right">
                 <div class="float-right custom-control-inline">
                    {% if user.is_authenticated %}
-                        <a href="{% url 'shopping_cart:shopping-cart' %}" class="float-right">
+                        <a href="" class="float-right">
                                 <img src="{% static 'icons/shopping_cart.png' %}" alt="Koszyk" width="50" height="50">
                         </a>
-                        <a href="{% url 'customer_profile:profile' %}" class="nav-link">Mój Profil</a>
-                        <a href="{% url 'customer_profile:logout' %}" class="nav-link">Wyloguj</a>
+                        <a href="" class="nav-link">Mój Profil</a>
+                        <a href="" class="nav-link">Wyloguj</a>
                     {% else %}
-                        <a href="{% url 'customer_profile:login' %}" class="nav-link">Zaloguj</a>
-                        <a href="{% url 'customer_profile:register' %}" class="nav-link">Rejestracja</a>
+                        <a href="" class="nav-link">Zaloguj</a>
+                        <a href="" class="nav-link">Rejestracja</a>
                     {% endif %}
                 </div>
             </div>
