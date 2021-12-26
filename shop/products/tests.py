@@ -1,3 +1,5 @@
-from django.test import TestCase
+from common.tests import ExtendedTestCase
 
-# Create your tests here.
+
+class CategoryModelTestCase(ExtendedTestCase):
+    pass

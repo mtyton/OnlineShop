@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Attribute(models.Model):
     attr_name = models.CharField(max_length=255)
-    attr_description = models.TextField()
+    attr_description = models.TextField(blank=True)
 
 
 class AttributeValue(models.Model):
@@ -21,11 +21,11 @@ class Category(models.Model):
         "Category", on_delete=models.CASCADE, null=True
     )
     category_name = models.CharField(max_length=255)
-    attributes = models.ManyToManyField("AttributeValue")
+    attributes = models.ManyToManyField("Attribute")
 
     @property
     def sub_categories(self) -> models.QuerySet:
-        return Category.objects.get(parent_category=self)
+        return Category.objects.filter(parent_category=self)
 
     def __str__(self):
         return self.category_name
@@ -44,7 +44,7 @@ class Product(models.Model):
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)],
         default=0.0
     )
-    attributes = models.ManyToManyField("AttributeValue")
+    attributes_values = models.ManyToManyField("AttributeValue")
 
     # family hashcode gives us information to which family product belongs,
     # for example, phone X may have few memory/color versions, but all phones X

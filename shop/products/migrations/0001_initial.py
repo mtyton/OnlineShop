@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('attr_name', models.CharField(max_length=255)),
-                ('attr_description', models.TextField()),
+                ('attr_description', models.TextField(blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -33,8 +33,8 @@ class Migration(migrations.Migration):
             name='Category',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category_name', models.CharField(max_length=255)),
-                ('attributes', models.ManyToManyField(to='products.AttributeValue')),
+                ('category_name', models.CharField(max_length=255, null=True)),
+                ('attributes', models.ManyToManyField(to='products.Attribute')),
                 ('parent_category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='products.category')),
             ],
         ),

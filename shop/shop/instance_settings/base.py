@@ -2,7 +2,7 @@ import os
 import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # define env
 env = environ.Env()
@@ -27,13 +27,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    # bootstrap and crispy should be removed
     'bootstrap4',
     'crispy_forms',
+    'shop_api',
     'web_shop',
     'products',
     'users',
     'shopping_cart',
     'crm',
+    'crm_api',
+    'common',
+    'fixture_generator'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +136,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 LOGOUT_REDIRECT_URL = '/home/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+FIXTURE_DIRS = [
+    'fixtures'
+]
+
+FIXTURE_GENERATOR_FILE_NAME = "generator.py"
+FIXTURE_GENERATOR_CLASS_NAME = "Generator"
+FIXTURE_GENERATOR_DISCOVERER = \
+    "fixture_generator.generator_discoverer.StandardGeneratorDiscoverer"
