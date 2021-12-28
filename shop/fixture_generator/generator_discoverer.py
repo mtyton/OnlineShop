@@ -70,12 +70,15 @@ class StandardGeneratorDiscoverer:
                 validated_generators.append(generator)
         return validated_generators
 
-    def get_generators(self, apps_names: List[str]) -> List[str]:
+    def get_generators(self, apps_names: List[str] = None) -> List[str]:
         """
         This method should discover generators for given apps
         (if not given checks for all). It returns a list of dot paths for
         those generators, Eg: app1.generator
         """
+        if not apps_names:
+            apps_names = []
+
         available_generators = self._discover_generators(apps_names)
         validated_generators = self._verify_import(available_generators)
         return validated_generators

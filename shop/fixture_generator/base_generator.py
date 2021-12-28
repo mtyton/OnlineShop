@@ -1,4 +1,10 @@
+import os
+import sys
+
 from django.core.management import call_command
+from django.conf import settings
+
+# from fixture_generator.data_generators import StandardDataGenerator
 
 
 class BaseGenerator(object):
@@ -16,9 +22,11 @@ class BaseGenerator(object):
     """
     fixtures_map = {}
 
-    def __init__(self, fill_data=False, no_validate=False):
-        # TODO - make usage of no validate option
-        pass
+    def __init__(
+            self, data_generator_class=None, fill_data=False
+    ):
+        self.data_generator = None #data_generator_class()
+        self.fill_data = fill_data
 
     def __fill_model_with_data(self) -> bool:
         # TODO - there should be implemented mechanism which will allow to
@@ -28,10 +36,19 @@ class BaseGenerator(object):
     def __delete_created_records(self) -> bool:
         return False
 
+    def __build_fixture_path(self, fixture_name: str) -> str:
+        base_path = os.path.dirname(
+            sys.modules[self.__class__.__module__].__file__
+        )
+        return f"{base_path}/" \
+               f"{settings.DEFAULT_FIXTURE_GENERATOR_DIRECTORY_NAME}/" \
+               f"{fixture_name}"
+
     def run(self) -> None:
         # There has to be fixtures map defined
         assert len(self.fixtures_map.keys()) != 0
 
         for fixture_name, models in self.fixtures_map.items():
+            fixture_path = self.__build_fixture_path(fixture_name)
             # TODO add fixture name validation
-            call_command('dumpdata', models, **{'output': fixture_name})
+            call_command('dumpdata', models, **{'output': fixture_path})

@@ -82,8 +82,8 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env("DATABASE_NAME", default="password"),
-        'USER': env("DATABASE_USER", default="password"),
+        'NAME': env("DATABASE_NAME", default="db_name"),
+        'USER': env("DATABASE_USER", default="db_user"),
         'PASSWORD': env("DATABASE_PASSWORD", default="password"),
         'HOST': 'localhost',
         'PORT': 3306
@@ -143,5 +143,7 @@ FIXTURE_DIRS = [
 
 FIXTURE_GENERATOR_FILE_NAME = "generator.py"
 FIXTURE_GENERATOR_CLASS_NAME = "Generator"
-FIXTURE_GENERATOR_DISCOVERER = \
-    "fixture_generator.generator_discoverer.StandardGeneratorDiscoverer"
+DEFAULT_FIXTURE_GENERATOR_DIRECTORY_NAME = 'fixtures'
+
+FIXTURE_GENERATOR_PATH = "fixture_generator.generator_discoverer"
+FIXTURE_GENERATOR_DISCOVERER = "StandardGeneratorDiscoverer"
