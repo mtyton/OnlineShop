@@ -2,6 +2,18 @@ from django import forms
 from products.models import Product, Category
 
 
+class CategoryAddAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['parent_category'].required = False
+        self.fields['attributes'].required = False
+
+
 class ProductFilterForm(forms.Form):
     """
         This forms is used to filter products

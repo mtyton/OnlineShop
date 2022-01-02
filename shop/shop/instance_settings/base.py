@@ -2,7 +2,7 @@ import os
 import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # define env
 env = environ.Env()
@@ -27,13 +27,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    # bootstrap and crispy should be removed
     'bootstrap4',
     'crispy_forms',
-    'web_shop',
+    'shop_api',
     'products',
     'users',
     'shopping_cart',
-    'crm',
+    'crm_api',
+    'common',
+    'fixture_generator'
 ]
 
 MIDDLEWARE = [
@@ -76,8 +80,8 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env("DATABASE_NAME", default="password"),
-        'USER': env("DATABASE_USER", default="password"),
+        'NAME': env("DATABASE_NAME", default="db_name"),
+        'USER': env("DATABASE_USER", default="db_user"),
         'PASSWORD': env("DATABASE_PASSWORD", default="password"),
         'HOST': 'localhost',
         'PORT': 3306
@@ -130,3 +134,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 LOGOUT_REDIRECT_URL = '/home/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+FIXTURE_DIRS = [
+    'fixtures'
+]
+
+FIXTURE_GENERATOR_FILE_NAME = "generator.py"
+FIXTURE_GENERATOR_CLASS_NAME = "Generator"
+DEFAULT_FIXTURE_GENERATOR_DIRECTORY_NAME = 'fixtures'
+
+FIXTURE_GENERATOR_PATH = "fixture_generator.generator_discoverer"
+FIXTURE_GENERATOR_DISCOVERER = "StandardGeneratorDiscoverer"
