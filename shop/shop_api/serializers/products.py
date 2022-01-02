@@ -17,8 +17,8 @@ class ProductReadSerializer(serializers.ModelSerializer):
         model = products_models.Product
         fields = [
             'product_categories', 'product_name',
-            'description', 'rating',
-            'attributes'
+            'description', 'rating', 'product_category',
+            'attributes_values'
         ]
 
     product_categories = serializers.SerializerMethodField()

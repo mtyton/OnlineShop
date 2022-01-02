@@ -9,6 +9,9 @@ router = DefaultRouter()
 router.register(
     "category", products_views.CategoryModelViewSet, basename="category"
 )
+router.register(
+    "product", products_views.ProductViewSet, basename="product"
+)
 
 urlpatterns = [
 

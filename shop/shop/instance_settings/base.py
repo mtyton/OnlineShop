@@ -32,11 +32,9 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'shop_api',
-    'web_shop',
     'products',
     'users',
     'shopping_cart',
-    'crm',
     'crm_api',
     'common',
     'fixture_generator'

@@ -44,4 +44,49 @@ class CategoryModelViewSetTestCase(ExtendedShopApiTestCase):
 
 
 class ProductViewSetTestCase(ExtendedShopApiTestCase):
-    pass
+    fixtures = [
+        'test_full_products.json'
+    ]
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('product-list')
+
+    def test_get_queryset_no_category(self):
+        response = self.client.get(
+            self.url
+        )
+        self.assertEqual(response.status_code, 200)
+        # TODO this should return top rated products in near future
+        content = response.json()
+        self.assertNotEqual(len(content), 0)
+
+    def test_get_queryset_top_level_category(self):
+        top_level_category = product_models.Category.objects.filter(
+            parent_category=None
+        ).first()
+
+        response = self.client.get(
+            self.url, data={'category': top_level_category.pk}
+        )
+        self.assertEqual(response.status_code, 200)
+        # TODO this should return most popular products in near future
+        content = response.json()
+        self.assertNotEqual(len(content), 0)
+
+    def test_get_queryset_bottom_level_category(self):
+        category = product_models.Category.objects.filter(
+            parent_category=None
+        ).first()
+        while category.sub_categories.count() != 0:
+            category = category.sub_categories.first()
+
+        response = self.client.get(
+            self.url, data={'category': category.pk}
+        )
+        self.assertEqual(response.status_code, 200)
+        # TODO this should return most popular products in near future
+        content = response.json()
+        self.assertNotEqual(len(content), 0)
+        for elem in content:
+            self.assertEqual(elem['product_category'], category.pk)
