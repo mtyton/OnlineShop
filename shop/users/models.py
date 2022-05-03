@@ -11,7 +11,7 @@ class BaseDeliveryModel(models.Model):
     class Meta:
         abstract = True
 
-    country = models.CharField(max_length=255)
+    country = models.ForeignKey("regions.Country", on_delete=models.CASCADE)
 
     # address
     city = models.CharField(max_length=255)
@@ -29,8 +29,7 @@ class BaseContactModel(BaseDeliveryModel):
         abstract = True
 
     # contact data
-    # in case user already has an account we should simply duplicate
-    # account email
+    # if user already have an account he may want to use different email for delivery
     email = models.EmailField()
     phone = models.CharField(max_length=25, null=True)
 
@@ -47,5 +46,3 @@ class PersonCustomer(BaseContactModel):
 
 class AnonymousCustomer(BaseContactModel):
     date_created = models.DateField(auto_now_add=True)
-
-
