@@ -1,7 +1,6 @@
 from django.contrib import admin
-
-from products.models import Product, Category, Attribute, AttributeValue
 from products.forms import CategoryAddAdminForm
+from products.models import Attribute, AttributeValue, Category, Product
 
 
 class CategoryAdminView(admin.ModelAdmin):
@@ -13,4 +12,3 @@ admin.site.register(Product)
 
 admin.site.register(Attribute)
 admin.site.register(AttributeValue)
-

@@ -29,4 +29,3 @@
 #
 #
 # shopping_cart_view = login_required(ShoppingCartView.as_view())
-

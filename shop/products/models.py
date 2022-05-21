@@ -1,5 +1,5 @@
-from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class Attribute(models.Model):
@@ -23,9 +23,8 @@ class Category(models.Model):
     """
     This model keeps information about available product categories
     """
-    parent_category = models.ForeignKey(
-        "Category", on_delete=models.CASCADE, null=True
-    )
+
+    parent_category = models.ForeignKey("Category", on_delete=models.CASCADE, null=True)
     category_name = models.CharField(max_length=255, null=True)
     attributes = models.ManyToManyField("Attribute")
 
@@ -61,15 +60,12 @@ class Product(models.Model):
     """
 
     # NOTE: we should only assign product bottom level categories
-    product_category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    product_category = models.ForeignKey("Category", on_delete=models.CASCADE)
     product_name = models.CharField(max_length=255)
     description = models.TextField(max_length=2500)
     price = models.DecimalField(max_digits=30, decimal_places=2)
 
-    rating = models.FloatField(
-        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)],
-        default=0.0
-    )
+    rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], default=0.0)
     attributes_values = models.ManyToManyField("AttributeValue")
 
     # family hashcode gives us information to which family product belongs,
@@ -88,7 +84,8 @@ class ProductImage(models.Model):
     """
     This models keeps images for products
     """
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+
+    product = models.ForeignKey("Product", on_delete=models.CASCADE)
     image = models.ImageField(upload_to="product_images")
     # is main image tells if image should be the default one
     is_main_image = models.BooleanField(default=False)

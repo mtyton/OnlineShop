@@ -1,4 +1,4 @@
-from shop.instance_settings.base import *
+from shop.instance_settings.base import *  # noqa F403, W0614
 
 DEBUG = True
 

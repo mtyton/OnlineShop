@@ -1,5 +1,4 @@
 from django.db import models
-
 from users.models import PersonCustomer
 
 
@@ -12,13 +11,9 @@ class Order(models.Model):
     If there is an existing customer in database(customer has an account),
     then contact_data is set to customer contact_data.
     """
-    registered_customer = models.ForeignKey(
-        "users.PersonCustomer", on_delete=models.CASCADE, null=True
-    )
-    anonymous_customer = models.ForeignKey(
-        "users.AnonymousCustomer",
-        on_delete=models.CASCADE, null=True
-    )
+
+    registered_customer = models.ForeignKey("users.PersonCustomer", on_delete=models.CASCADE, null=True)
+    anonymous_customer = models.ForeignKey("users.AnonymousCustomer", on_delete=models.CASCADE, null=True)
 
     ordered = models.BooleanField(default=False)
     ordered_at = models.DateTimeField(default=None, null=True)
@@ -47,6 +42,7 @@ class ProductOrder(models.Model):
     """
     Product Order instance it contains info about ordered product
     """
+
     product = models.ForeignKey("products.Product", on_delete=models.PROTECT)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)

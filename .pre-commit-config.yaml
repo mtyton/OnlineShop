@@ -1,0 +1,40 @@
+# to learn more about this setup simply check this tutorial https://codeburst.io/tool-your-django-project-pre-commit-hooks-e1799d84551f
+default_language_version:
+  # default language version for each language
+  python: python3.10
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: name-tests-test
+        args: [ "--django" ]
+      - id: trailing-whitespace
+
+-   repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+    -   id: black
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.9.2
+  hooks:
+    - id: flake8
+      additional_dependencies: [
+          "flake8-bugbear",
+          "flake8-comprehensions",
+          "flake8-mutable",
+          "flake8-print",
+          "flake8-simplify",
+      ]
+- repo: https://github.com/asottile/seed-isort-config
+  rev: v2.2.0
+  hooks:
+    - id: seed-isort-config
+- repo: https://github.com/pycqa/isort
+  rev: 5.10.1
+  hooks:
+    - id: isort

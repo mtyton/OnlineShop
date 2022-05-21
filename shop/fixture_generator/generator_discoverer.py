@@ -1,8 +1,8 @@
 import os
+from typing import List, Protocol
 
-from typing import Protocol, List
-from django.conf import settings
 from django.apps import apps
+from django.conf import settings
 
 
 class BaseGeneratorDiscoverer(Protocol):
@@ -31,9 +31,7 @@ class StandardGeneratorDiscoverer:
         it'll simply search only in applications given.
         """
         if not apps_names:
-            applications = [
-                app.verbose_name.lower() for app in apps.get_app_configs()
-            ]
+            applications = [app.verbose_name.lower() for app in apps.get_app_configs()]
         else:
             applications = apps_names
 
@@ -65,7 +63,8 @@ class StandardGeneratorDiscoverer:
                 exec(path)
             except ImportError:
                 # TODO - change this to logging to file
-                print(f"Unable to import generator from {generator}")
+                # print(f"Unable to import generator from {generator}")
+                ...
             else:
                 validated_generators.append(generator)
         return validated_generators

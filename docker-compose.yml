@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  db:
+    restart: always
+    ports:
+      - 3306:3306
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: zaq1@WSX
+      MARIADB_DATABASE: online_shop
+
+  web:
+    build: .
+    restart: always
+    depends_on:
+      - "db"
+    volumes:
+      - .:/website
+    ports:
+      - "8000:8000"

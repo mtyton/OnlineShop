@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 # Create your models here.
@@ -8,6 +8,7 @@ class BaseDeliveryModel(models.Model):
     Contact data for user/order.
     Contact data is used to send messages/deliver
     """
+
     class Meta:
         abstract = True
 
@@ -38,6 +39,7 @@ class PersonCustomer(BaseContactModel):
     """
     Customer's profile model.
     """
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

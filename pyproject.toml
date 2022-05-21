@@ -1,0 +1,14 @@
+[tool.pylint.BASIC]
+good-names = "_,i,e,setUp,tearDown,maxDiff"
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 120
+default_section = "THIRDPARTY"
+known_third_party = ["common", "django", "environ", "fixture_generator", "products", "rest_framework", "shop_api", "shopping_cart", "users", "web_shop"]
+known_first_party = []
